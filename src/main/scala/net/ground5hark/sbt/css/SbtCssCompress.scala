@@ -93,7 +93,7 @@ object SbtCssCompress extends AutoPlugin {
           }
       }
 
-      val compressed = runCompressor(compressMappings.keySet).pair(relativeTo(targetDir))
+      val compressed = runCompressor(compressMappings.keySet).pair(Path.relativeTo(targetDir))
       compressed ++ mappings.filter {
         // Handle duplicate mappings
         case (mappingFile, mappingName) =>

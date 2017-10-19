@@ -6,9 +6,9 @@ organization := "net.ground5hark.sbt"
 
 name := "sbt-css-compress-test"
 
-version := "0.1.4"
+version := "0.1.5-SNAPSHOT"
 
-scalaVersion := "2.10.6"
+scalaVersion := "2.12.4"
 
 lazy val root = (project in file(".")).enablePlugins(SbtWeb)
 

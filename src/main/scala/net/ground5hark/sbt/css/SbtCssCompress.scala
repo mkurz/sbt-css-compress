@@ -74,6 +74,8 @@ object SbtCssCompress extends AutoPlugin {
   }
 
   private def compress: Def.Initialize[Task[Pipeline.Stage]] = Def.task {
+    val cacheDirectoryValue = streams.value.cacheDirectory
+    val logValue = streams.value.log
     mappings: Seq[PathMapping] =>
       val targetDir = webTarget.value / parentDir.value
       val compressMappings = mappings.view
@@ -81,13 +83,13 @@ object SbtCssCompress extends AutoPlugin {
         .filterNot(m => (excludeFilter in cssCompress).value.accept(m._1))
         .toMap
 
-      val runCompressor = FileFunction.cached(streams.value.cacheDirectory / parentDir.value, FilesInfo.lastModified) {
+      val runCompressor = FileFunction.cached(cacheDirectoryValue / parentDir.value, FilesInfo.lastModified) {
         files =>
           files.map { f =>
             val outputFileSubPath = s"${util.withoutExt(compressMappings(f))}${suffix.value}"
             val outputFile = targetDir / outputFileSubPath
             IO.createDirectory(outputFile.getParentFile)
-            streams.value.log.info(s"Compressing file ${compressMappings(f)}")
+            logValue.info(s"Compressing file ${compressMappings(f)}")
             invokeCompressor(f, outputFile, lineBreak.value)
             outputFile
           }
@@ -99,7 +101,7 @@ object SbtCssCompress extends AutoPlugin {
         case (mappingFile, mappingName) =>
           val include = compressed.filter(_._2 == mappingName).isEmpty
           if (!include)
-            streams.value.log.warn(s"css-compressor encountered a duplicate mapping for $mappingName and will " +
+            logValue.warn(s"css-compressor encountered a duplicate mapping for $mappingName and will " +
               "prefer the css-compressor version instead. If you want to avoid this, make sure you aren't " +
               "including minified and non-minified sibling assets in the pipeline.")
           include

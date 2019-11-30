@@ -1,4 +1,4 @@
-lazy val `sbt-css-compress` = project in file(".")
+lazy val `sbt-css-compress` = (project in file(".")).enablePlugins(SbtWebBase)
 
 organization := "net.ground5hark.sbt"
 
@@ -7,14 +7,14 @@ name := "sbt-css-compress"
 version := "0.1.5-SNAPSHOT"
 
 resolvers ++= Seq(
-  "Typesafe Releases" at "http://repo.typesafe.com/typesafe/releases/",
-  Resolver.url("sbt snapshot plugins", url("http://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots"))(Resolver.ivyStylePatterns),
+  "Typesafe Releases" at "https://repo.typesafe.com/typesafe/releases/",
+  Resolver.url("sbt snapshot plugins", url("https://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots"))(Resolver.ivyStylePatterns),
   Resolver.sonatypeRepo("snapshots"),
-  "Typesafe Snapshots Repository" at "http://repo.typesafe.com/typesafe/snapshots/",
+  "Typesafe Snapshots Repository" at "https://repo.typesafe.com/typesafe/snapshots/",
   Resolver.mavenLocal
 )
 
-addSbtWeb("1.4.3")
+addSbtWeb("1.4.4")
 
 publishMavenStyle := true
 

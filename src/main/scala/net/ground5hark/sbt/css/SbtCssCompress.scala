@@ -45,8 +45,8 @@ object SbtCssCompress extends AutoPlugin {
     suffix := ".min.css",
     parentDir := "",
     lineBreak := -1,
-    includeFilter in cssCompress := new UnminifiedCssFileFilter(suffix.value),
-    excludeFilter in cssCompress := HiddenFileFilter,
+    cssCompress / includeFilter := new UnminifiedCssFileFilter(suffix.value),
+    cssCompress / excludeFilter := HiddenFileFilter,
     cssCompress := compress.value
   )
 
@@ -79,8 +79,8 @@ object SbtCssCompress extends AutoPlugin {
     mappings: Seq[PathMapping] =>
       val targetDir = webTarget.value / parentDir.value
       val compressMappings = mappings.view
-        .filter(m => (includeFilter in cssCompress).value.accept(m._1))
-        .filterNot(m => (excludeFilter in cssCompress).value.accept(m._1))
+        .filter(m => (cssCompress / includeFilter).value.accept(m._1))
+        .filterNot(m => (cssCompress / excludeFilter).value.accept(m._1))
         .toMap
 
       val runCompressor = FileFunction.cached(cacheDirectoryValue / parentDir.value, FilesInfo.lastModified) {

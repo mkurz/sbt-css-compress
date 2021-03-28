@@ -41,5 +41,5 @@ verifyMinified := {
 val verifyAssetsMinified = taskKey[Unit]("Verify that the contents of assets are minified")
 
 verifyAssetsMinified := {
-  verifyMin((public in Assets).value, streams.value.log)
+  verifyMin((Assets / public).value, streams.value.log)
 }

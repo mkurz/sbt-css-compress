@@ -7,10 +7,6 @@ name := "sbt-css-compress"
 version := "0.1.5-SNAPSHOT"
 
 resolvers ++= Seq(
-  "Typesafe Releases" at "https://repo.typesafe.com/typesafe/releases/",
-  Resolver.url("sbt snapshot plugins", url("https://repo.scala-sbt.org/scalasbt/sbt-plugin-snapshots"))(Resolver.ivyStylePatterns),
-  Resolver.sonatypeRepo("snapshots"),
-  "Typesafe Snapshots Repository" at "https://repo.typesafe.com/typesafe/snapshots/",
   Resolver.mavenLocal
 )
 
